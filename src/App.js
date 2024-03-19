@@ -14,16 +14,22 @@ function getToken() {
   const userToken = JSON.parse(tokenString);
   return userToken?.token;
 }
-function App() {
+const App = () => {
   let token = getToken();
 
   if (!token) {
     return <Login setToken={setToken} />;
   }
+  async function logoutUser() {
+    localStorage.clear();
+    window.location.reload(true);
+  }
 
   return (
     <div className="App">
       <h1 className="App-header">JWT-Storage-Tutorial Application</h1>
+      <button onClick={logoutUser}>Logout</button>
+
       <BrowserRouter>
         <Routes>
           <Route path="/subscriber-feed" element={<SubscriberFeed />}></Route>
@@ -32,6 +38,6 @@ function App() {
       </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;
