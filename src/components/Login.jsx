@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 async function loginUser(credentials) {
   return fetch("http://localhost:8080/login", {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -10,7 +11,7 @@ async function loginUser(credentials) {
   }).then((data) => data.json());
 }
 
-function Login({ setToken }) {
+function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -20,7 +21,7 @@ function Login({ setToken }) {
       username: emailRef.current.value,
       password: passwordRef.current.value,
     });
-    setToken(token);
+    window.location.reload(false);
   };
   return (
     <div className="login-wrapper">
