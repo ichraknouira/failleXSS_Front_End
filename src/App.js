@@ -7,9 +7,11 @@ import XSSHelper from "./components/XSSHelper";
 import { useEffect, useState } from "react";
 
 const App = () => {
+  // add state to check user authenticated or not and loader
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  // call authStatus API to check status
   const getAuthStatus = async () => {
     await setLoading(true);
     return fetch("http://localhost:8080/auth-status", {
@@ -20,11 +22,14 @@ const App = () => {
       },
     }).then((data) => data.json());
   };
+  // upate state authenticated
   const isAuthenticated = async () => {
     const authStatus = await getAuthStatus();
     setAuthenticated(authStatus.isAuthenticated);
     await setLoading(false);
   };
+
+  // clear Cookie
   async function logoutUser() {
     await fetch("http://localhost:8080/logout", {
       method: "POST",
@@ -35,10 +40,12 @@ const App = () => {
     });
     isAuthenticated();
   }
+  // use hook to call isAuthenticated func
   useEffect(() => {
     isAuthenticated();
   }, []);
 
+  // render component
   return (
     <>
       {!loading && (

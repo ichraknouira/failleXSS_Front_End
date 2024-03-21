@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 
 async function loginUser(credentials) {
+  // add credentials include
   return fetch("http://localhost:8080/login", {
     method: "POST",
     credentials: "include",
@@ -17,10 +18,11 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = await loginUser({
+    await loginUser({
       username: emailRef.current.value,
       password: passwordRef.current.value,
     });
+    // reload page
     window.location.reload(false);
   };
   return (
