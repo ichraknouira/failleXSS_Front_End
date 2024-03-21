@@ -1,8 +1,10 @@
 import React, { useRef } from "react";
 
 async function loginUser(credentials) {
+  // add credentials include
   return fetch("http://localhost:8080/login", {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -10,17 +12,18 @@ async function loginUser(credentials) {
   }).then((data) => data.json());
 }
 
-function Login({ setToken }) {
+function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = await loginUser({
+    await loginUser({
       username: emailRef.current.value,
       password: passwordRef.current.value,
     });
-    setToken(token);
+    // reload page
+    window.location.reload(false);
   };
   return (
     <div className="login-wrapper">
